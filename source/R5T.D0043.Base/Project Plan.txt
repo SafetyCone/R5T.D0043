@@ -1,0 +1,4 @@
+R5T.D0043.Base - Base definitions library for source control types text file serializer services.
+
+Goals
+
