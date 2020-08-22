@@ -46,5 +46,50 @@ namespace R5T.D0043.Default
             var serviceAction = ServiceAction.New<IRemoteRepositoryUrlsListTextFileSerializer>(() => services.AddRemoteRepositoryUrlsListTextFileSerializer());
             return serviceAction;
         }
+
+        /// <summary>
+        /// Adds the <see cref="RepositoryNameAndLocalDirectoryPathMappingStringSerializer"/> implementation of <see cref="IRepositoryNameAndLocalDirectoryPathMappingStringSerializer"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static IServiceCollection AddRepositoryNameAndLocalDirectoryPathMappingStringSerializer(this IServiceCollection services)
+        {
+            services.AddSingleton<IRepositoryNameAndLocalDirectoryPathMappingStringSerializer, RepositoryNameAndLocalDirectoryPathMappingStringSerializer>();
+
+            return services;
+        }
+
+        /// <summary>
+        /// Adds the <see cref="RepositoryNameAndLocalDirectoryPathMappingStringSerializer"/> implementation of <see cref="IRepositoryNameAndLocalDirectoryPathMappingStringSerializer"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static IServiceAction<IRepositoryNameAndLocalDirectoryPathMappingStringSerializer> AddRepositoryNameAndLocalDirectoryPathMappingStringSerializerAction(this IServiceCollection services)
+        {
+            var serviceAction = ServiceAction.New<IRepositoryNameAndLocalDirectoryPathMappingStringSerializer>(() => services.AddRepositoryNameAndLocalDirectoryPathMappingStringSerializer());
+            return serviceAction;
+        }
+
+        /// <summary>
+        /// Adds the <see cref="RepositoryNameAndLocalDirectoryPathMappingsListTextFileSerializer"/> implementation of <see cref="IRepositoryNameAndLocalDirectoryPathMappingsListTextFileSerializer"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static IServiceCollection AddRepositoryNameAndLocalDirectoryPathMappingsListTextFileSerializer(this IServiceCollection services,
+            IServiceAction<IRepositoryNameAndLocalDirectoryPathMappingStringSerializer> repositoryNameAndLocalDirectoryPathMappingStringSerializerAction)
+        {
+            services
+                .AddSingleton<IRepositoryNameAndLocalDirectoryPathMappingsListTextFileSerializer, RepositoryNameAndLocalDirectoryPathMappingsListTextFileSerializer>()
+                .Run(repositoryNameAndLocalDirectoryPathMappingStringSerializerAction)
+                ;
+
+            return services;
+        }
+
+        /// <summary>
+        /// Adds the <see cref="RepositoryNameAndLocalDirectoryPathMappingsListTextFileSerializer"/> implementation of <see cref="IRepositoryNameAndLocalDirectoryPathMappingsListTextFileSerializer"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static IServiceAction<IRepositoryNameAndLocalDirectoryPathMappingsListTextFileSerializer> AddRepositoryNameAndLocalDirectoryPathMappingsListTextFileSerializerAction(this IServiceCollection services,
+            IServiceAction<IRepositoryNameAndLocalDirectoryPathMappingStringSerializer> repositoryNameAndLocalDirectoryPathMappingStringSerializerAction)
+        {
+            var serviceAction = ServiceAction.New<IRepositoryNameAndLocalDirectoryPathMappingsListTextFileSerializer>(() => services.AddRepositoryNameAndLocalDirectoryPathMappingsListTextFileSerializer(
+                repositoryNameAndLocalDirectoryPathMappingStringSerializerAction));
+
+            return serviceAction;
+        }
     }
 }
