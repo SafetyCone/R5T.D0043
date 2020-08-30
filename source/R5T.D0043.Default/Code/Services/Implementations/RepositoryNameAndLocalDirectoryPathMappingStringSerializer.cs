@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
+using R5T.D0044.Default;
 using R5T.T0010;
 
 using R5T.Magyar;
@@ -8,18 +9,19 @@ using R5T.Magyar;
 
 namespace R5T.D0043.Default
 {
-    public class RepositoryNameAndLocalDirectoryPathMappingStringSerializer : IRepositoryNameAndLocalDirectoryPathMappingStringSerializer
+    public class RepositoryNameAndLocalDirectoryPathMappingStringSerializer : TokenizedStringSerializerBase<RepositoryNameAndLocalDirectoryPathMapping>, IRepositoryNameAndLocalDirectoryPathMappingStringSerializer
     {
-        public const char TokenSeparatorChar = '|';
-
-
-        public static char[] Separators { get; } = ArrayHelper.From(RepositoryNameAndLocalDirectoryPathMappingStringSerializer.TokenSeparatorChar);
-
-
-        public Task<RepositoryNameAndLocalDirectoryPathMapping> Deserialize(string @string)
+        public override Task<string[]> GetTokens(RepositoryNameAndLocalDirectoryPathMapping value)
         {
-            var tokens = @string.Split(RepositoryNameAndLocalDirectoryPathMappingStringSerializer.Separators);
+            var tokens = ArrayHelper.From(
+                value.RepositoryName.Value,
+                value.LocalRepositoryDirectoryPath.Value);
 
+            return Task.FromResult(tokens);
+        }
+
+        protected override Task<RepositoryNameAndLocalDirectoryPathMapping> DeserializeTokens(string[] tokens)
+        {
             var repositoryNameToken = tokens[0];
             var localRepositoryDirectoryPathToken = tokens[1];
 
@@ -29,13 +31,6 @@ namespace R5T.D0043.Default
             var mapping = new RepositoryNameAndLocalDirectoryPathMapping(repositoryName, localRepositoryDirectoryPath);
 
             return Task.FromResult(mapping);
-        }
-
-        public Task<string> Serialize(RepositoryNameAndLocalDirectoryPathMapping value)
-        {
-            var @string = $"{value.RepositoryName.Value}{RepositoryNameAndLocalDirectoryPathMappingStringSerializer.TokenSeparatorChar}{value.LocalRepositoryDirectoryPath.Value}";
-
-            return Task.FromResult(@string);
         }
     }
 }

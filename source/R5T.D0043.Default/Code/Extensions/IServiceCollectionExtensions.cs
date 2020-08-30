@@ -91,5 +91,51 @@ namespace R5T.D0043.Default
 
             return serviceAction;
         }
+
+        /// <summary>
+        /// Adds the <see cref="RepositoryNameAndRemoteUrlMappingStringSerializer"/> implementation of <see cref="IRepositoryNameAndRemoteUrlMappingStringSerializer"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static IServiceCollection AddRepositoryNameAndRemoteUrlMappingStringSerializer(this IServiceCollection services)
+        {
+            services.AddSingleton<IRepositoryNameAndRemoteUrlMappingStringSerializer, RepositoryNameAndRemoteUrlMappingStringSerializer>();
+
+            return services;
+        }
+
+        /// <summary>
+        /// Adds the <see cref="RepositoryNameAndRemoteUrlMappingStringSerializer"/> implementation of <see cref="IRepositoryNameAndRemoteUrlMappingStringSerializer"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static IServiceAction<IRepositoryNameAndRemoteUrlMappingStringSerializer> AddRepositoryNameAndRemoteUrlMappingStringSerializerAction(this IServiceCollection services)
+        {
+            var serviceAction = ServiceAction.New<IRepositoryNameAndRemoteUrlMappingStringSerializer>(() => services.AddRepositoryNameAndRemoteUrlMappingStringSerializer());
+            return serviceAction;
+        }
+
+        /// <summary>
+        /// Adds the <see cref="RepositoryNameAndRemoteUrlMappingsListTextFileSerializer"/> implementation of <see cref="IRepositoryNameAndRemoteUrlMappingsListTextFileSerializer"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static IServiceCollection AddRepositoryNameAndRemoteUrlMappingsListTextFileSerializer(this IServiceCollection services,
+            IServiceAction<IRepositoryNameAndRemoteUrlMappingStringSerializer> repositoryNameAndRemoteUrlMappingStringSerializerAction)
+        {
+            services
+                .AddSingleton<IRepositoryNameAndRemoteUrlMappingsListTextFileSerializer, RepositoryNameAndRemoteUrlMappingsListTextFileSerializer>()
+                .Run(repositoryNameAndRemoteUrlMappingStringSerializerAction)
+                ;
+
+            return services;
+        }
+
+        /// <summary>
+        /// Adds the <see cref="RepositoryNameAndRemoteUrlMappingsListTextFileSerializer"/> implementation of <see cref="IRepositoryNameAndRemoteUrlMappingsListTextFileSerializer"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static IServiceAction<IRepositoryNameAndRemoteUrlMappingsListTextFileSerializer>
+            AddRepositoryNameAndRemoteUrlMappingsListTextFileSerializerAction(this IServiceCollection services,
+            IServiceAction<IRepositoryNameAndRemoteUrlMappingStringSerializer> repositoryNameAndRemoteUrlMappingStringSerializerAction)
+        {
+            var serviceAction = ServiceAction.New<IRepositoryNameAndRemoteUrlMappingsListTextFileSerializer>(() => services.AddRepositoryNameAndRemoteUrlMappingsListTextFileSerializer(
+                repositoryNameAndRemoteUrlMappingStringSerializerAction));
+
+            return serviceAction;
+        }
     }
 }

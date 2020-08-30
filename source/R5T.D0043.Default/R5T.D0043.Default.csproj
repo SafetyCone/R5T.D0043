@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\R5T.D0042\source\R5T.D0042.Default\R5T.D0042.Default.csproj" />
     <ProjectReference Include="..\..\..\R5T.D0042\source\R5T.D0042.Stagira\R5T.D0042.Stagira.csproj" />
+    <ProjectReference Include="..\..\..\R5T.D0044\source\R5T.D0044.Default\R5T.D0044.Default.csproj" />
     <ProjectReference Include="..\..\..\R5T.Dacia.Extensions\source\R5T.Dacia.Extensions\R5T.Dacia.Extensions.csproj" />
     <ProjectReference Include="..\R5T.D0043.Base\R5T.D0043.Base.csproj" />
   </ItemGroup>
