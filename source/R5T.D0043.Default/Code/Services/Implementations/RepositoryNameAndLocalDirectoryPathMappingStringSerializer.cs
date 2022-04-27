@@ -3,13 +3,14 @@ using System.Threading.Tasks;
 
 using R5T.D0044.Default;
 using R5T.T0010;
-
-using R5T.Magyar;
+using R5T.T0064;
 
 
 namespace R5T.D0043.Default
 {
-    public class RepositoryNameAndLocalDirectoryPathMappingStringSerializer : TokenizedStringSerializerBase<RepositoryNameAndLocalDirectoryPathMapping>, IRepositoryNameAndLocalDirectoryPathMappingStringSerializer
+    [ServiceImplementationMarker]
+    public class RepositoryNameAndLocalDirectoryPathMappingStringSerializer : TokenizedStringSerializerBase<RepositoryNameAndLocalDirectoryPathMapping>, IRepositoryNameAndLocalDirectoryPathMappingStringSerializer,
+        IServiceImplementation
     {
         public override Task<string[]> GetTokens(RepositoryNameAndLocalDirectoryPathMapping value)
         {

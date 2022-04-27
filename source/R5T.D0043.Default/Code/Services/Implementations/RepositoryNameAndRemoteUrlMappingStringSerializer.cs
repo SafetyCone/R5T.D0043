@@ -3,13 +3,14 @@ using System.Threading.Tasks;
 
 using R5T.D0044.Default;
 using R5T.T0010;
-
-using R5T.Magyar;
+using R5T.T0064;
 
 
 namespace R5T.D0043.Default
 {
-    public class RepositoryNameAndRemoteUrlMappingStringSerializer : TokenizedStringSerializerBase<RepositoryNameAndRemoteUrlMapping>, IRepositoryNameAndRemoteUrlMappingStringSerializer
+    [ServiceImplementationMarker]
+    public class RepositoryNameAndRemoteUrlMappingStringSerializer : TokenizedStringSerializerBase<RepositoryNameAndRemoteUrlMapping>, IRepositoryNameAndRemoteUrlMappingStringSerializer,
+        IServiceImplementation
     {
         public override Task<string[]> GetTokens(RepositoryNameAndRemoteUrlMapping value)
         {
